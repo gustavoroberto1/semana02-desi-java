@@ -2,12 +2,12 @@ package semana02.desi.java;
 
 import java.util.Scanner;
 import javax.swing.JOptionPane;
-import views.PrimeiraInterface;
+import views.Pomodoro;
 
 public class Semana02DesiJava {
 
     public static void main(String[] args) {  
-        new PrimeiraInterface();
+        new Pomodoro().setVisible(true);
     }
     
     public static void metodoJoption(){
