@@ -7,7 +7,7 @@ import javax.swing.Timer;
 public class Pomodoro extends javax.swing.JFrame {
 
     private int tempoRestante;
-    private int tempoInicial = 25;
+    private int tempoInicial = 1;
     private Timer timer;
     
     public Pomodoro() {
@@ -61,13 +61,12 @@ public class Pomodoro extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void startActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startActionPerformed
-        tempoRestante = tempoInicial * 60; // TEMPO INICIAL CONVERTIDO SEGUNDOS;
-        
-        timer = new Timer(1000, new ActionListener() {
-            public void actionPerformed(ActionEvent e){
-                atualizaTempo();
-            }
+        tempoRestante = 10; // TEMPO INICIAL CONVERTIDO SEGUNDOS;
+        this.timer = new Timer(1000, (ActionEvent e) -> {
+            atualizaTempo();
         });
+        timer.start();
+        start.setEnabled(false);
     }//GEN-LAST:event_startActionPerformed
 
     private void atualizaTempo(){
@@ -75,6 +74,14 @@ public class Pomodoro extends javax.swing.JFrame {
         int segundos = tempoRestante % 60;
         
         String tempoText = String.format("%02d:%02d", minutos, segundos);
+        
+        tempo.setText(tempoText);
+        
+        tempoRestante--;
+        if(tempoRestante < 0){
+            timer.stop();
+            start.setEnabled(true);
+        }
     }
     
     
