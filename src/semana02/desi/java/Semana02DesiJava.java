@@ -1,14 +1,63 @@
 package semana02.desi.java;
 
+import java.awt.Image;
+import java.awt.MenuItem;
+import java.awt.PopupMenu;
+import java.awt.SystemTray;
+import java.awt.TrayIcon;
+import java.io.File;
 import java.util.Scanner;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.Popup;
 import views.PomodoroAdvenced;
 
 public class Semana02DesiJava {
-
+    private static JFrame view;
+    
     public static void main(String[] args) {  
-        new PomodoroAdvenced().setVisible(true);
+        view = new PomodoroAdvenced();
+        view.setVisible(true);
+        createIconTray();
     }
+    
+    public static void createIconTray() {
+        if(!SystemTray.isSupported()){
+            System.out.println("Não tem suporte;");
+            return;
+        }
+        
+        String path = System.getProperty("user.dir") + File.separator + "src" + File.separator + "assets" + File.separator + "tray.png";
+        Image icon = new ImageIcon(path).getImage();
+        
+        PopupMenu menu = new PopupMenu();
+        MenuItem fechar = new MenuItem("FECHAR");
+        MenuItem open = new MenuItem("ABRIR");
+        menu.add(open);
+        menu.add(fechar);
+        
+        open.addActionListener((ActionEvent) -> {
+            view.setVisible(true);
+        });
+        
+        fechar.addActionListener((ActionEvent) -> {
+            System.exit(0);
+        });
+        
+        TrayIcon tray = new TrayIcon(icon, "Pomodoro", menu);
+        
+        SystemTray bandeja = SystemTray.getSystemTray();
+        
+        try {
+          bandeja.add(tray); 
+        }catch (Exception e){
+            System.out.println("Não foi possível Add Tray");
+        }
+        
+        
+    }
+    
     
     public static void metodoJoption(){
         String nome = JOptionPane.showInputDialog("Informe seu nome:");
@@ -35,7 +84,6 @@ public class Semana02DesiJava {
         
         
     }
-    
     
     public static void metodoScanner() {
          // SCANNER
